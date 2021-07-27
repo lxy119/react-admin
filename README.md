@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+##  分页列表
+    1).纯前台分页
+    请求获取数据：一次获取所有数据，翻页不需要再发请求
+    请求接口：不需要指定页码(pageNum)和每页数量(pageSize)
+    响应数据：所有数据的数组
+    2).后台的分页
+    请求获取数据：每次只获取当前页的数据，翻页需要发请求
+    请求接口：需要指定请求参数：请求页码(pageNum)和请求数量(pageSize)
+    响应数据：当前页数据的数组+总记录数（total）
+    3).如何选择？
+    根据数量的多少和客户去选择

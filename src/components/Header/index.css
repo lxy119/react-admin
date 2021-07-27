@@ -1,0 +1,45 @@
+.header {
+  background-color: #fff;
+  height: 80px;
+}
+.header .header-top {
+  height: 39px;
+  line-height: 39px;
+  text-align: right;
+  border-bottom: 1px solid #1da57a;
+  padding-right: 30px;
+}
+.header .header-top span {
+  margin-right: 10px;
+}
+.header .header-bottom {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.header .header-bottom .header-bottom-left {
+  width: 25%;
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+}
+.header .header-bottom .header-bottom-left::after {
+  content: '';
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid #fff;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  position: absolute;
+  right: 50%;
+  top: 100%;
+  transform: translateX(50%);
+}
+.header .header-bottom .header-bottom-right {
+  width: 75%;
+  text-align: right;
+  margin-right: 30px;
+}
+.header .header-bottom .header-bottom-right span {
+  margin: 0 15px;
+}
+/*# sourceMappingURL=./index.css.map */

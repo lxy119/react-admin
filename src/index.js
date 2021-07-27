@@ -1,17 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from "./App";
+import storageUtils from './utils/storageUtils'
+import memoryUtils from './utils/memoryUtils'
+// 如果 local 中保存了 data, 将 data 保存到内存中
+const data = storageUtils.getUser()
+if(data && data._id) {
+memoryUtils.data = data
+}
+ReactDOM.render(<App/>,document.getElementById("root"))
