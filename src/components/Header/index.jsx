@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { Modal} from 'antd';
+import {connect} from'react-redux'
+
 import {formateDate} from '../../utils/dataUtils'
 import memoryUtils from '../../utils/memoryUtils'
 import {reqWeather} from '../../api'
@@ -61,7 +63,7 @@ class Header extends Component {
         clearInterval(this.intervalid)
     }
     render() {
-        const title=this.getTitle()
+        const title=this.props.headTitle
         const username = memoryUtils.data.username
         const {sysTime,weather} =this.state
         return (
@@ -82,4 +84,4 @@ class Header extends Component {
         )
     }
 }
-export default withRouter(Header)
+export default connect((state)=>({headTitle:state.headTitle}),{})(withRouter(Header)) 
