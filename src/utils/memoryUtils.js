@@ -2,5 +2,8 @@
 export default {
     data:{
 
+    },
+    product:{
+
     }
 }

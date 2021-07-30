@@ -4,6 +4,7 @@ import LinkButton from '../../components/Link-Button'
 import { reqAddUpdateProduct, reqCategorys } from '../../api';
 import PicturesWall from './PicturesWall'
 import RichTextEditor from './rich-text-editor';
+import memoryUtils from '../../utils/memoryUtils';
 class AddUpdate extends Component {
 
     constructor(props){
@@ -119,14 +120,18 @@ class AddUpdate extends Component {
         }
     }
     componentWillMount(){
-        const product=this.props.location.state
-        this.isUpdate=!!product
+        const product=memoryUtils.product
+        this.isUpdate=!!product._id
         this.product=product||{}
     }
 
     componentDidMount() {
         this.getCategorys('0')
     }
+    componentWillUnmount(){
+        memoryUtils.product={}
+    }
+
 
     render() {
         const categoryIds=[]

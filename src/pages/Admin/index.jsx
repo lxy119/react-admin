@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom'
-import memoryUtils from '../../utils/memoryUtils';
 import { Layout } from 'antd';
+import { connect } from 'react-redux';
 
 import Header from '../../components/Header';
 import LeftNav from '../../components/left-nav';
 import Home from '../home/home'
 import Category from '../category/category'
 import Product from '../product/product'
-import Role from '../role/role'
+import Role from '../role/Role'
 import User from '../user/user'
 import Bar from '../charts/bar'
 import Line from '../charts/line'
 import Pie from '../charts/pie'
-
+import NotFound from '../not-found/not-found'
 const { Footer, Sider, Content } = Layout;
 //管理界面的组件
 class Ademin extends Component {
     render() {
 
-        if (!memoryUtils.data || !memoryUtils.data._id) {
+        if (!this.props.user || !this.props.user._id) {
             return <Redirect to='/login' />
         }
         return (
@@ -39,7 +39,8 @@ class Ademin extends Component {
                             <Route path='/charts/bar' component={Bar} />
                             <Route path='/charts/line' component={Line} />
                             <Route path='/charts/pie' component={Pie} />
-                            <Redirect to='/home' />
+                            <Redirect from='/' to='/home'  exact/>
+                            <Route component={NotFound} />
                         </Switch>
                     </Content>
                     <Footer style={{ textAlign: 'center', color: '#cccccc' }}>推荐使用谷歌浏览器，可以获得更好的体验</Footer>
@@ -49,4 +50,4 @@ class Ademin extends Component {
     }
 }
 
-export default Ademin;
+export default connect(state=>({user:state.user}),{})(Ademin);

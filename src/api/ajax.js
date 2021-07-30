@@ -18,8 +18,6 @@ export default function ajax(url,data={},method = "GET"){
     }).catch(error => {
         message.error("请求出错"+error.message)
     })
-
-
    })
 
 }

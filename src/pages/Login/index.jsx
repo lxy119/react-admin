@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Form, Input, Button, Icon } from 'antd';
+import {connect} from 'react-redux'
+
+
 import './index.less'
 import logo from '../../assets/images/logo.png'
-import { Form, Input, Button, Icon,message } from 'antd';
-import { reqLogin } from '../../api';
-import memoryUtils from "../../utils/memoryUtils"
-import storageUtils from '../../utils/storageUtils';
 import { Redirect } from 'react-router-dom';
+import{login} from '../../redux/actions'
+
 //登录的路由组件
 class Login extends Component {
 
@@ -13,21 +15,12 @@ class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
         // 进行表单所有控件的校验
-        this.props.form.validateFields(async (err, values) => {
+        this.props.form.validateFields( (err, values) => {
             if (!err) {
                 // 校验成功
-                const { username, password } = values             
-                    const result =await reqLogin( username, password)
-                    const {status,msg,data} = result
-                    // console.log(result);
-                    if (status === 0){
-                        message.success("登录成功")
-                        storageUtils.saveUser(data)
-                        memoryUtils.data = data
-                        this.props.history.replace('/home')
-                    }else{
-                        message.error(msg)
-                    }
+                const { username, password } = values  
+                    // 调用分发异步action的函数
+                    this.props.login( username, password)
             } else {
                 // 校验失败
                 console.log("校验出错")
@@ -54,9 +47,11 @@ class Login extends Component {
     }
     render() {
         const { getFieldDecorator } = this.props.form
-        if (memoryUtils.data&&memoryUtils.data._id){
-            return <Redirect to = '/'/>
+        if (this.props.user&&this.props.user._id){
+            return <Redirect to = '/home'/>
         }
+        const user=this.props.user
+
         return (
             <div className="login">
                 
@@ -66,6 +61,7 @@ class Login extends Component {
                 </header>
                
                 <section className="login-content">
+                    <div className={user.errorMsg ? 'error-msg show':'error-msg'}>{user.errorMsg}</div>
                     <h1>用户登录</h1>
                     <Form onSubmit={this.handleSubmit} className="login-form">
                         <Form.Item>
@@ -112,4 +108,4 @@ class Login extends Component {
     }
 }
 
-export default Form.create()(Login)
+export default connect(state=>({user:state.user}),{login})(Form.create()(Login)) 

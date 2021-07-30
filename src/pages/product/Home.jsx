@@ -3,6 +3,7 @@ import {Card,Table,Icon,Select,Button,Input, message} from 'antd'
 import LinkButton from '../../components/Link-Button'
 import { reqProducts,reqSearchProducts,reqUpdateStatus } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
+import memoryUtils from '../../utils/memoryUtils'
 export default class Home extends Component {
     
     state={
@@ -64,14 +65,25 @@ export default class Home extends Component {
                 render:(product)=>{
                     return (
                         <span>
-                            <LinkButton onClick={()=>this.props.history.push('/product/detail',product)}>详情</LinkButton>
-                            <LinkButton onClick={()=>this.props.history.push('/product/addupdate',product)}>修改</LinkButton>
+                            <LinkButton onClick={()=>this.showDetail(product)}>详情</LinkButton>
+                            <LinkButton onClick={()=>this.modificationDetail(product)}>修改</LinkButton>
                         </span>
                     )
                 }
               },
           ];
     }
+    
+    showDetail=(product)=>{
+        memoryUtils.product=product
+        this.props.history.push('/product/detail')
+    }
+    modificationDetail=(product)=>{
+        memoryUtils.product=product
+        this.props.history.push('/product/addupdate')
+    }
+
+
     // 更新指定商品状态
     updateStatus=async (productId,status)=>{
         const result= await reqUpdateStatus(productId,status)

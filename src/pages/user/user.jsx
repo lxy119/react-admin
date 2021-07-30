@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Card, Table, Modal, Button, message } from 'antd'
+import { connect } from 'react-redux'
+
+import {logout} from '../../redux/actions'
 import { PAGE_SIZE } from '../../utils/constants'
 import { formateDate } from '../../utils/dataUtils'
 import LinkButton from '../../components/Link-Button'
 import { reqAddOrUpdateUser, reqDeleteuser, reqUsers } from '../../api'
 import UserForm from './UserForm'
-import storageUtils from '../../utils/storageUtils'
-import memoryUtils from '../../utils/memoryUtils'
 
-export default class user extends Component {
+class user extends Component {
 
     state = {
         users: [],
@@ -94,10 +95,8 @@ export default class user extends Component {
         const result = await reqAddOrUpdateUser(user)
 
         if (result.status === 0) {
-            if(user._id===memoryUtils.data._id){
-                memoryUtils.data={}
-                storageUtils.removeUser()
-                this.props.history.replace('/login')
+            if(user._id===this.props.user._id){
+                this.props.logout()
                 message.success('修改成功，请重新登录')
             }else{
                 message.success(`${this.user ? '修改成功' : '添加成功'}！`)
@@ -173,3 +172,5 @@ export default class user extends Component {
         )
     }
 }
+
+export default connect(state=>({user:state.user}),{logout})(user)

@@ -3,6 +3,7 @@ import {  Icon, Card, List } from 'antd'
 import LinkButton from '../../components/Link-Button'
 import { BASE_IMAGE } from '../../utils/constants'
 import { reqCategory} from '../../api'
+import memoryUtils from '../../utils/memoryUtils'
 export default class Detail extends Component {
     
     state={
@@ -11,7 +12,7 @@ export default class Detail extends Component {
     }
     
     async componentDidMount(){
-        const {pCategoryId,categoryId}=this.props.location.state
+        const {pCategoryId,categoryId}=memoryUtils.product
         if(pCategoryId==='0'){//一级商品名字
             const result= await reqCategory(categoryId)
             const cName1=result.data.name
@@ -27,12 +28,15 @@ export default class Detail extends Component {
 
     }
     
-    
+    componentWillUnmount(){
+        memoryUtils.product={}
+
+    }
     
     
     render() {
 
-        const {name,desc,price,imgs,detail}=this.props.location.state
+        const {name,desc,price,imgs,detail}=memoryUtils.product
         const {cName1,cName2}=this.state
         const title=(
             <span>
